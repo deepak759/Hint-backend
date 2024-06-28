@@ -13,10 +13,11 @@ export const createUser = async (req, res, next) => {
   });
   try {
     const user = await newUser.save();
-    const { email: emailId } = user._doc;
+    const { email: emailId,userName } = user._doc;
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.json({
       email: emailId,
+      userName,
       token,
     });
   } catch (error) {
@@ -38,7 +39,7 @@ export const signInUser = async (req, res, next) => {
      
         userName,
         email: emailId,
-        contactNumber,
+       
         token,
       
     });
