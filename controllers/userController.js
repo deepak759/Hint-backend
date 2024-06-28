@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { errorHandler } from "../utils/error.js";
 
 export const createUser = async (req, res, next) => {
-  const { userName, email, password, contactNumber } = req.body;
+  const {  email, password} = req.body;
   const hashedPassword = bcrypt.hashSync(password, 10);
   const newUser = new User({
     userName,
