@@ -4,23 +4,20 @@ import jwt from "jsonwebtoken";
 import { errorHandler } from "../utils/error.js";
 
 export const createUser = async (req, res, next) => {
-  const {  email, password} = req.body;
+  const { email, password } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 10);
   const newUser = new User({
-    userName,
-    contactNumber,
     email,
     password: hashedPassword,
   });
   try {
     const user = await newUser.save();
-    const {userName, email: emailId, contactNumber } = user._doc;
+    const { email: emailId } = user._doc;
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.json({
       data: {
-        userName,
         email: emailId,
-        contactNumber,
+
         token,
       },
     });
