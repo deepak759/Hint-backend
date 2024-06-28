@@ -15,11 +15,8 @@ export const createUser = async (req, res, next) => {
     const { email: emailId } = user._doc;
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     res.json({
-      data: {
-        email: emailId,
-
-        token,
-      },
+      email: emailId,
+      token,
     });
   } catch (error) {
     next(error);
@@ -37,12 +34,12 @@ export const signInUser = async (req, res, next) => {
     const { userName, email: emailId, contactNumber } = isValidUser._doc;
     const token = jwt.sign({ id: isValidUser._id }, process.env.JWT_SECRET);
     res.status(200).json({
-      data: {
+     
         userName,
         email: emailId,
         contactNumber,
         token,
-      },
+      
     });
   } catch (error) {
     next(error);

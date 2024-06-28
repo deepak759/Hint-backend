@@ -16,8 +16,7 @@ const userSchema = new mongoose.Schema({
   },
   contactNumber: {
     type: Number,
-    
-    
+    default:-1    
   },
   
   
