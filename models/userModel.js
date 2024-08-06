@@ -1,27 +1,50 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-  userName: {
-    type: String,
-   
-    required: true,
-  },
   email: {
     type: String,
-    required: true,
+    required: function() {
+      this.authProvider==='google';
+    },
     unique: true,
+    sparse: true
   },
-  password: {
+  facebookId: {
+    type: String,
+    required: function() {
+      return  this.authProvider==='facebook';
+    },
+    unique: true,
+    sparse: true
+  },
+  firstName: {
+    type: String,
+    required: function() {
+      return this.authProvider !== 'phone';
+    }
+  },
+  lastName: {
+    type: String,
+    required: function() {
+      return this.authProvider !== 'phone';
+    }
+  },
+  imageUrl: String,
+  phoneNumber: {
+    type: String,
+    required: function() {
+      return this.authProvider === 'phone';
+    },
+    unique: true,
+    sparse: true
+  },
+  authProvider: {
     type: String,
     required: true,
-  },
-  contactNumber: {
-    type: Number,
-    default:-1    
-  },
-  
-  
-});
+    enum: ['google', 'facebook', 'phone']
+  }
+}, { timestamps: true }
+);
 
 const User = mongoose.model("user", userSchema);
 export default User;
